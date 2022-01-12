@@ -1,6 +1,6 @@
 import { Component, OnInit, Pipe } from '@angular/core';
 import { IMovie } from '../models/movie.interface';
-
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-movie-detail',
   templateUrl: './movie-detail.component.html',
@@ -8,17 +8,21 @@ import { IMovie } from '../models/movie.interface';
 })
 export class MovieDetailComponent implements OnInit {
   movie!: IMovie;
-  constructor() {}
+  originalUrl: any = '';
+  constructor(private dom: DomSanitizer) {}
 
   ngOnInit(): void {
     let movieStorage: any = localStorage.getItem('movie-detail');
     this.movie = JSON.parse(movieStorage);
-    // this.movie.trailer =
-    //   'http://www.youtube.com/embed/' + this.movie.trailer.split('v=')[1];
     console.log(this.movie);
+    this.videoURL();
   }
 
-  photoURL(): string {
-    return 'http://www.youtube.com/embed/' + this.movie.trailer.split('v=')[1];
+  videoURL(): void {
+    if (!this.movie.trailer.split('v=')[1]) this.originalUrl = '';
+    else
+      this.originalUrl = this.dom.bypassSecurityTrustResourceUrl(
+        'http://www.youtube.com/embed/' + this.movie.trailer.split('v=')[1]
+      );
   }
 }
