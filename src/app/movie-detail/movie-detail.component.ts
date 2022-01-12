@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { IMovie } from '../models/movie.interface';
 
 @Component({
@@ -13,5 +13,12 @@ export class MovieDetailComponent implements OnInit {
   ngOnInit(): void {
     let movieStorage: any = localStorage.getItem('movie-detail');
     this.movie = JSON.parse(movieStorage);
+    // this.movie.trailer =
+    //   'http://www.youtube.com/embed/' + this.movie.trailer.split('v=')[1];
+    console.log(this.movie);
+  }
+
+  photoURL(): string {
+    return 'http://www.youtube.com/embed/' + this.movie.trailer.split('v=')[1];
   }
 }

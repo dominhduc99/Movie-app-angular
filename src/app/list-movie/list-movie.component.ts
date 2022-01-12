@@ -29,7 +29,9 @@ export class ListMovieComponent implements OnInit {
           imagePortrait: 'https://www.galaxycine.vn' + m.imagePortrait,
           point: m.point,
           trailer: m.trailer,
-          views: m.views
+          views: m.views,
+          description: m.description,
+          duration: m.duration
         };
       });
       this.movieCommingSoon = data.movieCommingSoon.map((m: any) => {
@@ -43,7 +45,9 @@ export class ListMovieComponent implements OnInit {
           imagePortrait: 'https://www.galaxycine.vn' + m.imagePortrait,
           point: m.point,
           trailer: m.trailer,
-          views: m.views
+          views: m.views,
+          description: m.description,
+          duration: m.duration
         };
       });
     });

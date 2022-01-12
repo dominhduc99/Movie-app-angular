@@ -1,11 +1,21 @@
 <div class="movie-detail-component">
-    <div class="movie-img">
-        <img [src]="movie.imagePortrait" alt="">
+    <div class="movie-detail">
+        <div class="movie-img">
+            <img [src]="movie.imagePortrait" alt="">
+        </div>
+        <div class="movie-info">
+            <h1 class="movie-name">{{ movie.name }}</h1>
+            <span class="movie-point">{{ movie.point.toFixed(1) }}</span>/<span class="max-point">10</span>
+        </div>
     </div>
-    <div class="movie-info">
-        <h1 class="movie-name">{{ movie.name }}</h1>
-        <span class="movie-point">{{ movie.point.toFixed(1) }}</span>/<span class="max-point">10</span>
-    </div>
+    <div class="movie-desc" [innerHTML]="movie.description"></div>
+    <p class="movie-trailer">Trailer</p>
+    <iframe type="text/html" 
+    width="640" 
+    height="385" 
+    [src]="photoURL()"
+    frameborder="0">
+    </iframe>
 </div>
 
 <style>
@@ -17,6 +27,8 @@
     .movie-detail-component {
         width: 90%;
         margin: 30px auto;
+    }
+    .movie-detail {
         display: flex;
         gap: 20px
     }

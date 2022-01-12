@@ -9,4 +9,6 @@ export interface IMovie {
   point: number;
   trailer: string;
   views: number;
+  description: string;
+  duration: string;
 }
