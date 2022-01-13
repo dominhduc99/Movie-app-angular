@@ -1,29 +1,106 @@
-<div class="list-movie-component">
-    <div class="option-show">
-        <a href="#" (click)="handleChangeShow(true)">Phim đang chiếu</a> | <a href="#" (click)="handleChangeShow(false)">Phim sắp chiếu</a>
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarTogglerDemo03"
+      aria-controls="navbarTogglerDemo03"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/home">Cinema | </a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item me-5">
+          <a class="nav-link active" aria-current="page" href="/home">Trang chủ</a>
+        </li>
+        <form class="d-flex">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Tìm kiếm..."
+            aria-label="Search"
+          />
+        </form>
+      </ul>
+      <button type="button" class="btn btn-danger" (click)="logout()">
+        Đăng xuất
+      </button>
     </div>
-    <div class="list-movie showing" *ngIf="isShowing"> 
-        <app-movie  *ngFor="let movie of movieShowing" [movie]="movie"></app-movie>
+  </div>
+</nav>
+
+<!-- list movie -->
+<div class="list-movie-component m-5 container">
+  <div class="option-show">
+    <div class="d-flex flex-row" [style]="{'gap':'20px'}">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="handleChangeShow(true)"
+      >
+        Phim đang chiếu
+      </button>
+      <div class="vertical bg-secondary"></div>
+      <button
+        type="button"
+        class="btn btn-outline-secondary ml-2"
+        (click)="handleChangeShow(false)"
+      >
+        Phim sắp chiếu
+      </button>
+      <div class="vertical bg-secondary"></div>
+      <input
+        id="name"
+        type="text"
+        [(ngModel)]="keyword"
+        (ngModelChange)="filterFilmShowing()"
+        *ngIf="isShowing"
+      />
+      <input
+        id="name"
+        type="text"
+        [(ngModel)]="keyword"
+        (ngModelChange)="filterFilmCommingSoon()"
+        *ngIf="!isShowing"
+      />
     </div>
-    <div class="list-movie commingSoon" *ngIf="!isShowing"> 
-        <app-movie  *ngFor="let movie of movieCommingSoon" [movie]="movie"></app-movie>
-    </div>
+   
+  </div>
+  <div class="list-movie showing d-flex flex-wrap mt-3" *ngIf="isShowing">
+    <app-movie *ngFor="let movie of movieShowing" [movie]="movie"></app-movie>
+  </div>
+  <div class="list-movie commingSoon d-flex flex-wrap mt-3" *ngIf="!isShowing">
+    <app-movie
+      *ngFor="let movie of movieCommingSoon"
+      [movie]="movie"
+    ></app-movie>
+  </div>
 </div>
 
 <style>
-    * {
-        font-family: Arial, Helvetica, sans-serif;
-        margin: 0;
-        box-sizing: border-box;
-    }
-    .list-movie-component {
-        width: 90%;
-        margin: 30px auto ;
-    }
-    .list-movie {
-        margin-top: 30px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
+  * {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .list-movie {
+    /* margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap; */
+    gap: 10px;
+  }
+  .option-show {
+    display: flex;
+    justify-content: space-between;
+  }
+  .vertical {
+    width: 1px;
+    height: 100%;
+  }
 </style>

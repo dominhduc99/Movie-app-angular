@@ -8,16 +8,20 @@ import { MovieService } from './services/movie.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ListMovieComponent } from './list-movie/list-movie.component';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     MovieComponent,
     ListMovieComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    LoginComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  providers: [MovieService],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  providers: [MovieService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
