@@ -19,10 +19,12 @@ export class MovieDetailComponent implements OnInit {
   }
 
   videoURL(): void {
-    if (!this.movie.trailer.split('v=')[1]) this.originalUrl = '';
-    else
-      this.originalUrl = this.dom.bypassSecurityTrustResourceUrl(
-        'http://www.youtube.com/embed/' + this.movie.trailer.split('v=')[1]
-      );
+    if (this.movie.trailer) {
+      if (!this.movie.trailer.split('v=')[1]) this.originalUrl = '';
+      else
+        this.originalUrl = this.dom.bypassSecurityTrustResourceUrl(
+          'http://www.youtube.com/embed/' + this.movie.trailer.split('v=')[1]
+        );
+    }
   }
 }

@@ -15,17 +15,27 @@
     <a class="navbar-brand" href="/home">Cinema | </a>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item me-5">
-          <a class="nav-link active" aria-current="page" href="/home">Trang chủ</a>
+        <li class="nav-item">
+          <a class="nav-link active me-5" [style]="{'width': '100%'}" aria-current="page" href="/home">Trang chủ</a>
         </li>
-        <form class="d-flex">
+        <li class="nav-item" *ngIf="user === 'admin'">
+          <a class="nav-link active me-5" [style]="{'width': '100%'}" aria-current="page" href="/movie-manager">Quản lý</a>
+        </li>
           <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Tìm kiếm..."
-            aria-label="Search"
-          />
-        </form>
+          class="form-control me-2"
+          type="text"
+          [(ngModel)]="keyword"
+          (ngModelChange)="filterFilmShowing()"
+          *ngIf="isShowing"
+        />
+        <input
+        class="form-control me-2"
+          type="text"
+          [(ngModel)]="keyword"
+          (ngModelChange)="filterFilmCommingSoon()"
+          *ngIf="!isShowing"
+        />
+        
       </ul>
       <button type="button" class="btn btn-danger" (click)="logout()">
         Đăng xuất
@@ -35,7 +45,7 @@
 </nav>
 
 <!-- list movie -->
-<div class="list-movie-component m-5 container">
+<div class="list-movie-component container-fluid mt-5">
   <div class="option-show">
     <div class="d-flex flex-row" [style]="{'gap':'20px'}">
       <button
@@ -53,34 +63,19 @@
       >
         Phim sắp chiếu
       </button>
-      <div class="vertical bg-secondary"></div>
-      <input
-        id="name"
-        type="text"
-        [(ngModel)]="keyword"
-        (ngModelChange)="filterFilmShowing()"
-        *ngIf="isShowing"
-      />
-      <input
-        id="name"
-        type="text"
-        [(ngModel)]="keyword"
-        (ngModelChange)="filterFilmCommingSoon()"
-        *ngIf="!isShowing"
-      />
     </div>
    
   </div>
-  <div class="list-movie showing d-flex flex-wrap mt-3" *ngIf="isShowing">
-    <app-movie *ngFor="let movie of movieShowing" [movie]="movie"></app-movie>
+  <div class="container-fluid mt-5">
+    <div class="row" *ngIf="isShowing">
+        <app-movie class="col-sm-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let movie of movieShowing" [movie]="movie"></app-movie>
+    </div>
+    <div class="row" *ngIf="!isShowing">
+      <app-movie class="col-sm-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let movie of movieCommingSoon" [movie]="movie"></app-movie>
   </div>
-  <div class="list-movie commingSoon d-flex flex-wrap mt-3" *ngIf="!isShowing">
-    <app-movie
-      *ngFor="let movie of movieCommingSoon"
-      [movie]="movie"
-    ></app-movie>
   </div>
 </div>
+
 
 <style>
   * {

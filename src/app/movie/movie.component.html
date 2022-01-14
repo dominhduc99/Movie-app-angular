@@ -1,19 +1,29 @@
-<div class="movie-card" (click)="handleClickDetail()" >
-   <div class="movie-img">
-    <img [src]="movie.imageLandscape" alt="">
-   </div>
-   <p class="movie-name"> {{ movie.name }}</p>
-</div>
+
+<div class="movie-card card mt-3" (click)="handleClickDetail()">
+  <div class="movie-img mt-2">
+    <img [src]="movie.imageLandscape" alt="" >
+  </div>
+    <div class="movie-desc card-body">
+      <p class="movie-name card-text">{{ movie.name }}</p>
+    </div>
+  </div>
 
 
 <style>
    .movie-card {
-        width: 300px;
-        border: 1px solid #ccc;
         cursor: pointer;
+   }
+   .movie-img {
+       display: flex;
+       justify-content: center;
    }
    .movie-img img{
         width: 300px;
+        
+    }
+    .movie-desc {
+        display: flex;
+        justify-content: center;
     }
     .movie-name {
         font-size: 16px;

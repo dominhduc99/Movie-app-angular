@@ -16,17 +16,23 @@ export class ListMovieComponent implements OnInit {
   movieCommingSoonOrg!: [];
   isShowing: boolean = true;
   keyword: string = '';
+  user: string = '';
   constructor(
     private movieService: MovieService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.user = authService.getUser();
+  }
 
   ngOnInit(): void {
-    if (localStorage.getItem('username') !== 'admin') {
-      this.router.navigate(['']);
-    } else {
+    if (
+      localStorage.getItem('username') === 'admin' ||
+      localStorage.getItem('username') === 'user'
+    ) {
       this.getMovie();
+    } else {
+      this.router.navigate(['']);
     }
   }
 

@@ -9,8 +9,8 @@
         </div>
     </div>
     <div class="movie-desc" [innerHTML]="movie.description"></div>
-    <p class="movie-trailer">Trailer</p>
-    <iframe type="text/html" width="640" height="385" [src]="originalUrl" frameborder="0">
+    <p class="movie-trailer"  *ngIf="movie.trailer">Trailer</p>
+    <iframe  type="text/html" width="640" height="385" [src]="originalUrl" frameborder="0"  *ngIf="movie.trailer">
     </iframe>
 </div>
 

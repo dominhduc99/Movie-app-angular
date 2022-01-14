@@ -7,6 +7,10 @@ export class AuthService {
       localStorage.setItem('username', user);
       return true;
     }
+    if (user === 'user' && password === 'user') {
+      localStorage.setItem('username', user);
+      return true;
+    }
 
     return false;
   }

@@ -1,0 +1,264 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarTogglerDemo03"
+      aria-controls="navbarTogglerDemo03"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/home">Cinema | </a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link active me-5"
+            [style]="{'width': '100%'}"
+            aria-current="page"
+            href="/home"
+            >Trang chủ</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link active me-5"
+            [style]="{'width': '100%'}"
+            aria-current="page"
+            href="/movie-manager"
+            >Quản lý</a
+          >
+        </li>
+      </ul>
+      <button type="button" class="btn btn-outline-danger" (click)="logout()">
+        Đăng xuất
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mx-auto mt-3" [style]="{'width': '300px'}">
+  <button
+    type="button"
+    class="btn btn-secondary me-2"
+    (click)="isShowing = true"
+  >
+    Đang chiếu
+  </button>
+  <button type="button" class="btn btn-secondary" (click)="isShowing = false">
+    Sắp chiếu
+  </button>
+</div>
+
+<table class="table table-bordered container mt-3">
+  <thead class="table-light">
+    <tr>
+      <th>Stt</th>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Subname</th>
+      <th>Age</th>
+      <th>Duration</th>
+      <th>Image</th>
+      <th>Point</th>
+      <th>Trailer</th>
+      <th>Views</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody *ngIf="isShowing">
+    <tr *ngFor="let movie of movieShowing; index as i ">
+      <td>{{ i + 1 }}</td>
+      <td>{{ movie.id }}</td>
+      <td>{{ movie.name }}</td>
+      <td>{{ movie.subName }}</td>
+      <td>{{ movie.age }}</td>
+      <td>{{ movie.duration }}</td>
+      <td>
+        <img [src]="movie.imageLandscape" [style]="{'width': '50px'}" alt="" />
+      </td>
+      <td>{{ movie.point.toFixed(2) }}</td>
+      <td>{{ movie.trailer }}</td>
+      <td>{{ movie.views }}</td>
+      <td>
+        <div class="d-flex gap-2">
+          <a
+            class="btn btn-danger"
+            data-bs-toggle="modal"
+            href="#modalToggleDelete"
+            role="button"
+            (click)="idDelete = movie.id"
+            >Xóa</a
+          >
+          <a
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            href="#modalTonggleEdit"
+            role="button"
+            (click)="setDataForm(movie.id)"
+            >Sửa</a
+          >
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="!isShowing">
+    <tr *ngFor="let movie of movieCommingSoon; index as i">
+      <td>{{ i + 1 }}</td>
+      <td>{{ movie.id }}</td>
+      <td>{{ movie.name }}</td>
+      <td>{{ movie.subName }}</td>
+      <td>{{ movie.age }}</td>
+      <td>{{ movie.duration }}</td>
+      <td>
+        <img [src]="movie.imageLandscape" [style]="{'width': '50px'}" alt="" />
+      </td>
+      <td>{{ movie.point.toFixed(2) }}</td>
+      <td>{{ movie.trailer }}</td>
+      <td>{{ movie.views }}</td>
+      <td>
+        <div class="d-flex gap-2">
+          <a
+            class="btn btn-danger"
+            data-bs-toggle="modal"
+            href="#modalToggleDelete"
+            role="button"
+            (click)="idDelete = movie.id"
+            >Xóa</a
+          >
+          <a
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            href="#modalTonggleEdit"
+            role="button"
+            (click)="setDataForm(movie.id)"
+            >Sửa</a
+          >
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- modal delete -->
+<div
+  class="modal fade"
+  id="modalToggleDelete"
+  aria-hidden="true"
+  aria-labelledby="modalToggleDeleteLabel"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title"
+          id="modalToggleDeleteLabel"
+          (click)="idDelete = ''"
+        >
+          Xóa phim
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa ???
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Hủy
+        </button>
+        <button
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          (click)="confirmDelete()"
+        >
+          Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal edit -->
+<div
+  class="modal fade"
+  id="modalTonggleEdit"
+  aria-hidden="true"
+  aria-labelledby="modalTonggleEditLabel"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTonggleEditLabel">Sửa phim</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmitEdit()">
+          <div class="mb-3">
+            <label for="name" class="form-label"
+              >Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              [(ngModel)]="myForm.name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="subname" class="form-label"
+              >Subname</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="subname"
+              name="subname"
+              [(ngModel)]="myForm.subname"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="age" class="form-label"
+              >Age</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="age"
+              name="age"
+              [(ngModel)]="myForm.age"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="duration" class="form-label"
+              >Duration</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="duration"
+              name="duration"
+              [(ngModel)]="myForm.duration"
+            />
+          </div>
+          <button [style]="{'float':'right'}" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
